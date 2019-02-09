@@ -449,8 +449,8 @@ namespace LDSAC
                 //previousValidations();
 
                 /* Se establecen los manejadores de los eventos asociados a los botones del panel de navegación */
-                this.chCondButtonsPanel.preClickedButton += new SteepBarButtonsPanel.OpenBarButtonPanelPreClickHandler(preBarButtonClick);
-                this.chCondButtonsPanel.postClickedButton += new SteepBarButtonsPanel.OpenBarButtonPanelPostClickHandler(postBarButtonClick);
+                //this.chCondButtonsPanel.preClickedButton += new SteepBarButtonsPanel.OpenBarButtonPanelPreClickHandler(preBarButtonClick);
+                //this.chCondButtonsPanel.postClickedButton += new SteepBarButtonsPanel.OpenBarButtonPanelPostClickHandler(postBarButtonClick);
 
                 /* Se establece el manejador del evento asociado al cambio en la selección del plan de financiación */
                 //this.DebtConditionsPanel.ChangePlanAction += new OpenFinancingConditions.ChangePlanActionDelegate(ChangePlanAction);

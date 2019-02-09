@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\</OutputPath>
+    <OutputPath>C:\Program Files %28x86%29\OpenSystems\OpenSmartFlex\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,51 +33,51 @@
   <ItemGroup>
     <Reference Include="OpenSystems.ClientRegister.Executor, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.ClientRegister.Executor.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.ClientRegister.Executor.dll</HintPath>
     </Reference>
     <Reference Include="OpenSystems.Common">
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Common.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Common.dll</HintPath>
     </Reference>
     <Reference Include="OpenSystems.Component">
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Component.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Component.dll</HintPath>
     </Reference>
     <Reference Include="OpenSystems.CustomerCare.DataUpdate, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.CustomerCare.DataUpdate.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.CustomerCare.DataUpdate.dll</HintPath>
     </Reference>
     <Reference Include="OpenSystems.EnterpriseLibrary">
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.EnterpriseLibrary.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.EnterpriseLibrary.dll</HintPath>
     </Reference>
     <Reference Include="OpenSystems.Financing, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Financing.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Financing.dll</HintPath>
     </Reference>
     <Reference Include="OpenSystems.Financing.BL, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Financing.BL.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Financing.BL.dll</HintPath>
     </Reference>
     <Reference Include="OpenSystems.Financing.DAL, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Financing.DAL.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Financing.DAL.dll</HintPath>
     </Reference>
     <Reference Include="OpenSystems.Financing.Entities, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Financing.Entities.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Financing.Entities.dll</HintPath>
     </Reference>
     <Reference Include="OpenSystems.Financing.UI, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Financing.UI.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Financing.UI.dll</HintPath>
     </Reference>
     <Reference Include="OpenSystems.Request, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Request.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Request.dll</HintPath>
     </Reference>
     <Reference Include="OpenSystems.Request.Entities, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Request.Entities.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Request.Entities.dll</HintPath>
     </Reference>
     <Reference Include="OpenSystems.Windows">
-      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Windows.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Windows.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
