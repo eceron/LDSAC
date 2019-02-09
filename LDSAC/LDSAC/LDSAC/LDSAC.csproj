@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DFC67704-F399-41AC-B5EB-03AAB7CF652D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LDSAC</RootNamespace>
+    <AssemblyName>LDSAC</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OpenSystems.ClientRegister.Executor, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.ClientRegister.Executor.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSystems.Common">
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSystems.Component">
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Component.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSystems.CustomerCare.DataUpdate, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.CustomerCare.DataUpdate.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSystems.EnterpriseLibrary">
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.EnterpriseLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSystems.Financing, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Financing.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSystems.Financing.BL, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Financing.BL.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSystems.Financing.DAL, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Financing.DAL.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSystems.Financing.Entities, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Financing.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSystems.Financing.UI, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Financing.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSystems.Request, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Request.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSystems.Request.Entities, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Request.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSystems.Windows">
+      <HintPath>..\..\..\..\..\..\Program Files\OpenSystems\OpenSmartFlex BD\OpenSmartflex\OpenSystems.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DAL\DataAccessLDSAC.cs" />
+    <Compile Include="DebtConditionPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DebtConditionPanel.Designer.cs">
+      <DependentUpon>DebtConditionPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicCallerLDSAC.cs" />
+    <Compile Include="LDSAC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LDSAC.Designer.cs">
+      <DependentUpon>LDSAC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PanelsCollection.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SelectFinanPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SelectFinanPanel.Designer.cs">
+      <DependentUpon>SelectFinanPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SteepBarButtonsPanel.cs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SteepBarButtonsPanel.cs.Designer.cs">
+      <DependentUpon>SteepBarButtonsPanel.cs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WarrantyDocumentPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WarrantyDocumentPanel.Designer.cs">
+      <DependentUpon>WarrantyDocumentPanel.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="LDSAC.resx">
+      <DependentUpon>LDSAC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DESCRIPTION" xml:space="preserve">
+    <value>Descripción</value>
+    <comment>Valor genérico para denotar una descripción</comment>
+  </data>
+  <data name="EXTRA_PAY_NUMBER" xml:space="preserve">
+    <value>Cuota Número</value>
+    <comment>Label para grilla</comment>
+  </data>
+  <data name="EXTRA_PAY_VALUE" xml:space="preserve">
+    <value>Valor</value>
+    <comment>Label para grilla</comment>
+  </data>
+  <data name="FinancingPlanCreation_date" xml:space="preserve">
+    <value>Fecha de creación</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanDefault_interest_perc" xml:space="preserve">
+    <value>Porc.Int.</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanDeferred_tax" xml:space="preserve">
+    <value>Financia IVA</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanDuedate_acc_count_susp" xml:space="preserve">
+    <value>Nro.Cuotas Vencidas para Suspensión</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanDuedate_acc_count_tr" xml:space="preserve">
+    <value>Nro. Cuotas Venc. para Translado</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanEnd_date_apply" xml:space="preserve">
+    <value>Fecha Final</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanFin_compute_meth" xml:space="preserve">
+    <value>Método de Cálculo</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanGradient_factor" xml:space="preserve">
+    <value>Factor Gra.</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanInitial_date_apply" xml:space="preserve">
+    <value>Fecha Ini.</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanInterest_rate" xml:space="preserve">
+    <value>Tasa de Interés</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanMax_extra_payments" xml:space="preserve">
+    <value>Máx.Nro.Cuot.Ext.</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanMin_debt_cancel_perc" xml:space="preserve">
+    <value>Porc.Mín.Deud.Canc.</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanRange_init_pay_percent" xml:space="preserve">
+    <value>Porc.Cuo.Ini.</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanRange_percent_to_finan" xml:space="preserve">
+    <value>Porc.Fin.</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanRange_quotas_number" xml:space="preserve">
+    <value>Nro.Cuotas</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanRange_spread" xml:space="preserve">
+    <value>Puntos Ad.</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanSupport_document" xml:space="preserve">
+    <value>Doc.Soporte</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanTimes_to_refinance" xml:space="preserve">
+    <value>Nro.Veces Refinan.</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FinancingPlanWarranty_generate" xml:space="preserve">
+    <value>Contrato?</value>
+    <comment>Label lista de valores plan de financiación</comment>
+  </data>
+  <data name="FINANCING_PLAN_DESC" xml:space="preserve">
+    <value>Descripción</value>
+    <comment>Label lista de valores plan de financiacion</comment>
+  </data>
+  <data name="FINANCING_PLAN_ID" xml:space="preserve">
+    <value>Código</value>
+    <comment>Label lista de valores plan de financiacion</comment>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>Código</value>
+    <comment>Valor genérico para denotar un código</comment>
+  </data>
+  <data name="NAME_" xml:space="preserve">
+    <value>Funcionario</value>
+    <comment>Nombre del funcionario</comment>
+  </data>
+  <data name="NOTCONTROLEDERRORDESC" xml:space="preserve">
+    <value>Ha ocurrido una excepción inesperada en la aplicación</value>
+    <comment>Texto para mensaje de error no controlado</comment>
+  </data>
+  <data name="ParameterDAYSTOFIRSTPAY" xml:space="preserve">
+    <value>DAYSTOFIRSTPAY</value>
+    <comment>Días para el pago de la primera cuota</comment>
+  </data>
+  <data name="ParameterFINAN_PREFIX_OUTFILE" xml:space="preserve">
+    <value>FINAN_PREFIX_OUTFILE</value>
+    <comment>Prefijo para archivo de salida de flujo de cuotas</comment>
+  </data>
+  <data name="ParameterFININCINTERESTPERC" xml:space="preserve">
+    <value>FININCINTERESTPERC</value>
+    <comment>Valor de Incremento del spin button para el porcentaje de interes</comment>
+  </data>
+  <data name="ParameterFININCPERCINITPAY" xml:space="preserve">
+    <value>FININCPERCINITPAY</value>
+    <comment>Valor de Incremento del spin button para porcentaje de cuota inicial</comment>
+  </data>
+  <data name="ParameterFININCPERCTOFINANC" xml:space="preserve">
+    <value>FININCPERCTOFINANC</value>
+    <comment>Valor de Incremento del spin button para el porcentaje a financiar</comment>
+  </data>
+  <data name="ParameterFININCQUOTASNUMBER" xml:space="preserve">
+    <value>FININCQUOTASNUMBER</value>
+    <comment>Valor de Incremento del spin button para Número de Cuotas</comment>
+  </data>
+  <data name="ParameterFININCSPREAD" xml:space="preserve">
+    <value>FININCSPREAD</value>
+    <comment>Valor de Incremento del spin button para Spread</comment>
+  </data>
+  <data name="PRODUCT_ID" xml:space="preserve">
+    <value>Producto</value>
+    <comment>Label</comment>
+  </data>
+  <data name="PRODUCT_TYPE" xml:space="preserve">
+    <value>Tipo de Producto</value>
+    <comment>Label Tipo de Producto para listas de valores</comment>
+  </data>
+  <data name="TXTFINANCIABLESELECT" xml:space="preserve">
+    <value>Total financiable seleccionado</value>
+    <comment>ToolTip</comment>
+  </data>
+  <data name="TXTMINVALUETOPAYPRODSEL" xml:space="preserve">
+    <value>De los productos seleccionados: No financiable + Conceptos financiables no seleccionados</value>
+    <comment>ToolTip</comment>
+  </data>
+  <data name="TXTMINVALUETOPAYSUBSCRIP" xml:space="preserve">
+    <value>Del total de la suscripción: No financiable + Financiable no seleccionado</value>
+    <comment>ToolTip</comment>
+  </data>
+  <data name="TXTNOTFINBALANCESELPRODUCT" xml:space="preserve">
+    <value>Total no financiable de productos seleccionados</value>
+    <comment>ToolTip</comment>
+  </data>
+</root>
