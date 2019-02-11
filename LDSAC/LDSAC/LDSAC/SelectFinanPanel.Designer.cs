@@ -162,10 +162,10 @@
             // txtBalToChangeCond
             // 
             this.txtBalToChangeCond.TypeBox = OpenSystems.Windows.Controls.TypesBox.Currency;
-            this.txtBalToChangeCond.Caption = "A Financiar";
+            this.txtBalToChangeCond.Caption = "Total a Abonar";
             this.txtBalToChangeCond.CaptionFont = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBalToChangeCond.DateTimeFormatMask = OpenSystems.Windows.Controls.DateTimeFormatMasks.ShorDate;
-            this.txtBalToChangeCond.ReadOnly = true;
+            this.txtBalToChangeCond.ReadOnly = false;
             //this.txtBalToChangeCond.NumberType = Infragistics.Win.UltraWinEditors.NumericType.Double;
             this.txtBalToChangeCond.NumberComposition = new OpenSystems.Windows.Controls.Number(15, 2);
             this.txtBalToChangeCond.Length = null;
@@ -200,7 +200,7 @@
         #endregion
 
         private System.Windows.Forms.Panel _pnlHeader;
-        private OpenSystems.Windows.Controls.OpenSimpleTextBox txtSubscriptionId;
+        internal OpenSystems.Windows.Controls.OpenSimpleTextBox txtSubscriptionId;
         internal OpenSystems.Windows.Controls.OpenSimpleTextBox txtRequestPersonName;
         private System.Windows.Forms.Panel _pnlContent;
         private OpenSystems.Windows.Controls.OpenSimpleTextBox txtFinancingId;

@@ -72,6 +72,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Request.dll</HintPath>
     </Reference>
+    <Reference Include="OpenSystems.Request.BL, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Request.BL.dll</HintPath>
+    </Reference>
     <Reference Include="OpenSystems.Request.Entities, Version=0.0.2.1, Culture=neutral, PublicKeyToken=1a886a7826ec4444, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Request.Entities.dll</HintPath>

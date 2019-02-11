@@ -69,7 +69,7 @@ namespace LDSAC
         
         public SelectFinanPanel()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         #region Acciones de Eventos

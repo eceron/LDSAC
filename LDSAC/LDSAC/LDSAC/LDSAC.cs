@@ -14,6 +14,8 @@ using OpenSystems.Common.Resources;
 using FinanBLConstants = OpenSystems.Financing.BL.Constants;
 using LDSAC.DAL;
 using OpenSystems.Financing.Windows.Controls;
+using OpenSystems.Windows.Controls.OperatingSectorControl.DAO;
+using OpenSystems.Financing.Common;
 
 
 namespace LDSAC
@@ -28,9 +30,7 @@ namespace LDSAC
         private Int64? _subscriptionId;
         private Int64? _productId;
         private Boolean successfulOperation = false;
-        #endregion
-
-        public Int64? ProductId;      
+        #endregion              
 
         #region Propiedades
 
@@ -140,7 +140,68 @@ namespace LDSAC
                 }
             }
         }
+        public Int64? SubscriptionId
+        {
+            get { return _subscriptionId; }
+            set
+            {
+                _subscriptionId = value;
 
+                /* Se verifica que la suscripción no sea nula */
+                if (_subscriptionId.HasValue)
+                {
+                    /* Se ejecuta la acción por evento asociada a la ejecución del proceso */
+                    FinancingController.Instance.ValProcessExecution(
+                        _subscriptionId.Value,
+                        this._productId);
+
+                    /* Se establece la suscripción en el control de datos básicos de la solicitud */
+                    this.MotiveGenericDataPanel.SubscriptionId = _subscriptionId;
+
+                    /* Se establece la suscripción en el panel de condiciones de financiación */
+                    this.DebtConditionsPanel.SubscriptionId = _subscriptionId;
+
+                    /* Se obtiene la deuda diferida sobre la cual se realizará el cambio de condiciones */
+                    this.SelectFinanPanel.LoadDebtToChangeCond(
+                        _subscriptionId.Value,
+                        this._productId,
+                        this._financingId,
+                        this._deferredId);
+                }
+            }
+        }
+        public Int64? ProductId
+        {
+            get { return _productId; }
+            set
+            {
+                _productId = value;
+
+                /* Se verifica que el producto no sea nulo */
+                if (_productId.HasValue)
+                {
+                    /* Establece el producto en el control de datos básicos de la solicitud */
+                    this.MotiveGenericDataPanel.ProductId = _productId;
+
+                    /* Establece la suscripción a partir de los datos de la solicitud */
+                    this._subscriptionId = this.MotiveGenericDataPanel.SubscriptionId;
+
+                    /* Se ejecuta la acción por evento asociada a la ejecución del proceso */
+                    FinancingController.Instance.ValProcessExecution(
+                        this._subscriptionId.Value,
+                        _productId);
+
+                    /* Se establece el producto en el panel de condiciones de financiación */
+                    this.DebtConditionsPanel.ProductId = _productId;
+
+                    this.SelectFinanPanel.LoadDebtToChangeCond(
+                        this._subscriptionId.Value,
+                        _productId,
+                        this._financingId,
+                        this._deferredId);
+                }
+            }
+        }
       
         #endregion
 
@@ -359,7 +420,7 @@ namespace LDSAC
         {
             InitializeComponent();
 
-            //this.LoadApplication();
+            this.LoadApplication();
             
         }
 
@@ -375,21 +436,39 @@ namespace LDSAC
 
             //this.header.RowInformationHeader = "header.RowInformationHeader";
 
-            this.Text = "LDSAC - Abono a capital titulo";
+            this.Text = "LDSAC - Abono a capital";
 
             MotiveGenericDataPanel = new RequestRegisterControl();
-            MotiveGenericDataPanel.TagName = "P_CHANGE_COND_DEBT"; //FinanBLConstants.CHANGE_COND_PACK_TYPE_TAG_NAME;
-            MotiveGenericDataPanel.MotiveTagName = "M_DEBT_NEGOTIATION"; //FinanBLConstants.CHANGE_COND_PROD_MOTI_TAG_NAME;
+            MotiveGenericDataPanel.TagName = "P_ABONO_A_CAPITAL_100364";//"P_CHANGE_COND_DEBT"; //FinanBLConstants.CHANGE_COND_PACK_TYPE_TAG_NAME;
+            MotiveGenericDataPanel.MotiveTagName = "M_ABONO_A_CAPITAL_100346";//"M_DEBT_NEGOTIATION"; //FinanBLConstants.CHANGE_COND_PROD_MOTI_TAG_NAME;
+            /*Valores quemados de prueba*/
+
+            /*this.MotiveGenericDataPanel.RequestInstance.InteractionId = 232323;
+            this.MotiveGenericDataPanel.RequestInstance.EmployeeName = "Eduardo Cerón";
+            this.MotiveGenericDataPanel.RequestInstance.EmployeeId = 239232;
+            //this.MotiveGenericDataPanel.RequestInstance.Comment = "Esto es una prueba";
+            this.MotiveGenericDataPanel.RequestInstance.RequestId = 24343;
+            this.MotiveGenericDataPanel.RequestInstance.OrganizationalArea = "Area";
+            this.MotiveGenericDataPanel.RequestInstance.OrganizationalAreaId = 999;
+            this.MotiveGenericDataPanel.RequestInstance.AddressId = 223223;
+            //this.MotiveGenericDataPanel.RequestInstance.ReceptionTypeId = 55555;
+            this.MotiveGenericDataPanel.RequestInstance.ContactId = 334342;
+            this.MotiveGenericDataPanel.RequestInstance.RegisterDate = Convert.ToDateTime("11/02/2019");*/
+            this._subscriptionId = 4659;
+            this._productId = 4659;
+            this.MotiveGenericDataPanel.SubscriptionId = this._subscriptionId;
 
             SelectFinanPanel = new SelectFinanPanel();
-            SelectFinanPanel.ProgramName = "LDSAC"; // FinancingConstants.ChConditionsAppName;
+            SelectFinanPanel.ProgramName = "LDSAC"; // FinancingConstants.ChConditionsAppName;  
+            SelectFinanPanel.txtSubscriptionId.TextBoxValue = Convert.ToString(this._subscriptionId);
 
+            
             DebtConditionsPanel = new DebtConditionPanel();
-            //DebtConditionsPanel.FinConditions.DocumentSupportRequired = false;
+            /*Debe ir comentado *///DebtConditionsPanel.FinConditions.DocumentSupportRequired = false;
             //DebtConditionsPanel.FinConditions.ShowDocumentSupport = false;
             //DebtConditionsPanel.FinConditions.ShowPercentToFinancing = false;
             //DebtConditionsPanel.FinConditions.ShowchkIVAOneQuote = false;
-            //DebtConditionsPanel.FinConditions.ShowMinimunValueToPay = false;
+            //DebtConditionsPanel.FinConditions.ShowMinimunValueToPay = false;/*Hasta aquí*/
             //DebtConditionsPanel.FinConditions.Programa = "LDSAC"; // SelectFinanPanel.ProgramName;
             DebtConditionsPanel.Programname = "LDSAC"; //DebtConditionsPanel.FinConditions.Programa;
 
@@ -398,7 +477,7 @@ namespace LDSAC
             this.BaseEntity = "CONTRACT";
             this.NodeLevelValue = "603046"; // nodeLevelValue;
 
-            this.ProductId = Convert.ToInt64(this.NodeLevelValue);
+           // this.ProductId = Convert.ToInt64(this.NodeLevelValue);
 
             /* Asigna el header */
 
@@ -419,13 +498,15 @@ namespace LDSAC
             this.chCondButtonsPanel.PanelCollection.Add(this.SelectFinanPanel);
 
             /* Define el tercer panel de navegación */
-            this.chCondButtonsPanel.PanelCollection.Add(this.DebtConditionsPanel);
+            //this.chCondButtonsPanel.PanelCollection.Add(this.DebtConditionsPanel);
 
             /* Define el cuarto panel de navegación */
-            this.chCondButtonsPanel.PanelCollection.Add(this.WarrantyDocumentPanel);
+            //this.chCondButtonsPanel.PanelCollection.Add(this.WarrantyDocumentPanel);
 
             /* Establece el maximo panel de navegacion por defecto */
-            this.chCondButtonsPanel.SetMaxPanel(this.WarrantyDocumentPanel);
+            //this.chCondButtonsPanel.SetMaxPanel(this.WarrantyDocumentPanel);
+            this.chCondButtonsPanel.SetMaxPanel(this.SelectFinanPanel);
+            
 
             /* Visualiza el panel de trabajo actual */
             this.chCondButtonsPanel.ShowCurrentPanel();
@@ -449,8 +530,8 @@ namespace LDSAC
                 //previousValidations();
 
                 /* Se establecen los manejadores de los eventos asociados a los botones del panel de navegación */
-                //this.chCondButtonsPanel.preClickedButton += new SteepBarButtonsPanel.OpenBarButtonPanelPreClickHandler(preBarButtonClick);
-                //this.chCondButtonsPanel.postClickedButton += new SteepBarButtonsPanel.OpenBarButtonPanelPostClickHandler(postBarButtonClick);
+                this.chCondButtonsPanel.preClickedButton += new OpenSteepBarButtonsPanel.OpenBarButtonPanelPreClickHandler(preBarButtonClick);
+                this.chCondButtonsPanel.postClickedButton += new OpenSteepBarButtonsPanel.OpenBarButtonPanelPostClickHandler(postBarButtonClick);
 
                 /* Se establece el manejador del evento asociado al cambio en la selección del plan de financiación */
                 //this.DebtConditionsPanel.ChangePlanAction += new OpenFinancingConditions.ChangePlanActionDelegate(ChangePlanAction);
@@ -478,7 +559,19 @@ namespace LDSAC
         /// <param name="e"></param>
         private void preBarButtonClick(object sender, CancelEventArgs e)
         {
-            return;
+            if (this.chCondButtonsPanel.LastButtonPressed == OpenSteepBarButtonsPanel.BarButtonType.NextButton)
+            {
+                this.ValidationOfRequiredFields();
+                if (this.chCondButtonsPanel.CurrentPanel.GetType() == SelectFinanPanel.GetType())
+                {
+                    if (SelectFinanPanel.SelectedProducts.Count == 0 || this.SelectFinanPanel.ValToChangeConditions == 0)
+                    {
+                        /* Error: La suma del valor de los diferidos seleccionados debe ser mayor que cero */
+                        ExceptionHandler.Raise(FinancingConstants.DeferredNotSelected);
+                    }
+                }
+
+            }
         }
 
         /// <summary>
@@ -488,7 +581,26 @@ namespace LDSAC
         /// <param name="e"></param>
         private void postBarButtonClick(object sender, EventArgs e)
         {
-            return;
+            this.CenterToScreen();
+
+            //Cancel desde cualquier ventana de navegación
+            if (this.chCondButtonsPanel.LastButtonPressed == OpenSteepBarButtonsPanel.BarButtonType.CancelButton)
+            {
+                this.successfulOperation = false;
+
+                /* Cierra la forma */
+                this.Close();
+            }
+            if (this.chCondButtonsPanel.LastButtonPressed == OpenSteepBarButtonsPanel.BarButtonType.NextButton)
+            {
+                if (this.chCondButtonsPanel.PreviousPanel.GetType() == MotiveGenericDataPanel.GetType()
+                    && this.chCondButtonsPanel.CurrentPanel.GetType() == SelectFinanPanel.GetType())
+                {
+                    this.SelectFinanPanel.txtRequestPersonName.TextBoxValue = this.MotiveGenericDataPanel.RequestInstance.ContactName;
+                    
+                }
+            }
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -496,6 +608,25 @@ namespace LDSAC
             this.LoadApplication();
 
             //this.LDSAC_Load(sender, e);
+        }
+        private void LDSACNavigator_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            /* Limpia las tablas de memoria asociadas al proceso de financiación */
+            //Statement.ClearMemoryFinancing();
+            return;
+            /* Limpia las tablas de memoria asociadas a cuotas extras */
+            //Statement.ClearExtraPayment();
+        }
+        private void ValidationOfRequiredFields()
+        {
+            if (this.chCondButtonsPanel.CurrentPanel is OpenSteepPanel)
+            {
+                OpenSteepPanel.ValidateRequiredFields((object)this.chCondButtonsPanel.CurrentPanel);
+            }
+            else if (this.chCondButtonsPanel.CurrentPanel is RequestRegisterControl)
+            {
+                (this.chCondButtonsPanel.CurrentPanel as RequestRegisterControl).ValidateData();
+            }
         }
     }
 }
