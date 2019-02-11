@@ -654,5 +654,11 @@ namespace LDSAC
                 (this.chCondButtonsPanel.CurrentPanel as RequestRegisterControl).ValidateData();
             }
         }
+        #region Metodos
+        private void ExecuteAbonoCapital()
+        {
+
+        }
+        #endregion
     }
 }

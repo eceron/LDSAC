@@ -214,7 +214,8 @@ namespace LDSAC
         /// </summary>
         private void SynchronizeTotalToFinance()
         {
-            this.txtBalToChangeCond.TextBoxValue = this._valToChangeConditions.ToString();
+            //this.txtBalToChangeCond.TextBoxValue = this._valToChangeConditions.ToString();
+            this.txtBalToChangeCond.TextBoxValue = Convert.ToString(0);
         }
         #endregion
     }
