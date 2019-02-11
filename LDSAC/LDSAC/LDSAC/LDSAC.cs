@@ -443,7 +443,7 @@ namespace LDSAC
             MotiveGenericDataPanel.MotiveTagName = "M_ABONO_A_CAPITAL_100346";//"M_DEBT_NEGOTIATION"; //FinanBLConstants.CHANGE_COND_PROD_MOTI_TAG_NAME;
             /*Valores quemados de prueba*/
 
-            /*this.MotiveGenericDataPanel.RequestInstance.InteractionId = 232323;
+            
             this.MotiveGenericDataPanel.RequestInstance.EmployeeName = "Eduardo Cerón";
             this.MotiveGenericDataPanel.RequestInstance.EmployeeId = 239232;
             //this.MotiveGenericDataPanel.RequestInstance.Comment = "Esto es una prueba";
