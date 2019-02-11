@@ -444,7 +444,7 @@ namespace LDSAC
             /*Valores quemados de prueba*/
 
             
-            this.MotiveGenericDataPanel.RequestInstance.EmployeeName = "Eduardo Cerón";
+            /*this.MotiveGenericDataPanel.RequestInstance.EmployeeName = "Eduardo Cerón";
             this.MotiveGenericDataPanel.RequestInstance.EmployeeId = 239232;
             //this.MotiveGenericDataPanel.RequestInstance.Comment = "Esto es una prueba";
             this.MotiveGenericDataPanel.RequestInstance.RequestId = 24343;
@@ -455,13 +455,18 @@ namespace LDSAC
             this.MotiveGenericDataPanel.RequestInstance.ContactId = 334342;
             this.MotiveGenericDataPanel.RequestInstance.RegisterDate = Convert.ToDateTime("11/02/2019");*/
             this._subscriptionId = 4659;
-            this._productId = 4659;
+            //this._productId = 4659;
+            //this._financingId = 3634435;
             this.MotiveGenericDataPanel.SubscriptionId = this._subscriptionId;
 
             SelectFinanPanel = new SelectFinanPanel();
             SelectFinanPanel.ProgramName = "LDSAC"; // FinancingConstants.ChConditionsAppName;  
             SelectFinanPanel.txtSubscriptionId.TextBoxValue = Convert.ToString(this._subscriptionId);
-
+            this.SelectFinanPanel.LoadDebtToChangeCond(
+                        this._subscriptionId.Value,
+                        _productId,
+                        this._financingId,
+                        this._deferredId);
             
             DebtConditionsPanel = new DebtConditionPanel();
             /*Debe ir comentado *///DebtConditionsPanel.FinConditions.DocumentSupportRequired = false;
@@ -524,7 +529,7 @@ namespace LDSAC
                 this.WarrantyDocumentPanel.SubscriberId = this.MotiveGenericDataPanel.SubscriberId;
 
                 /* Inicializaciones de financiaciones a nivel de BD */
-                DataAccessLDSAC.InitializeFinancing(603046); //this.SubscriptionId.Value);
+                DataAccessLDSAC.InitializeFinancing(this._subscriptionId.Value); //this.SubscriptionId.Value);
 
                 /* Se ejecutan validaciones previas al proceso */
                 //previousValidations();
