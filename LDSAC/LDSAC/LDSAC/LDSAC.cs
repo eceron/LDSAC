@@ -574,6 +574,18 @@ namespace LDSAC
                         /* Error: La suma del valor de los diferidos seleccionados debe ser mayor que cero */
                         ExceptionHandler.Raise(FinancingConstants.DeferredNotSelected);
                     }
+                    if (this.SelectFinanPanel.DeferredSelChanged)
+                    {
+                        /* Se establece la deuda diferida sobre la cual se realizará el cambio de condiciones */
+                        //this.SelectFinanPanel.SetDebtToChangeCond();
+                        //this.InitializeFinancingConditions();
+
+                        /* Inicializa el detector de cambio en la selección de diferidos */
+                        //this.SelectFinanPanel.DeferredSelChanged = false;
+                        
+                        //this.Close();
+                    }
+                    MessageBox.Show("Finalización trámite preButton", "Mensaje Alerta");
                 }
 
             }
@@ -603,6 +615,15 @@ namespace LDSAC
                 {
                     this.SelectFinanPanel.txtRequestPersonName.TextBoxValue = this.MotiveGenericDataPanel.RequestInstance.ContactName;
                     
+                }
+                if (this.chCondButtonsPanel.PreviousPanel.GetType() == SelectFinanPanel.GetType()
+                    && this.chCondButtonsPanel.CurrentPanel.GetType() == SelectFinanPanel.GetType())
+                {
+
+                    //Ejecuta la financiación.
+                    //ExecuteChangeConditions();
+                    MessageBox.Show("Finalización trámite PostButton", "Mensaje Alerta");
+                    //this.Close();
                 }
             }
 
