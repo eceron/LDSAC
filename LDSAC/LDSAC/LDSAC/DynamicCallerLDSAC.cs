@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using OpenSystems.Common.Interfaces;
+using OpenSystems.Windows.Controls;
 
 namespace LDSAC
 {
@@ -9,7 +10,14 @@ namespace LDSAC
     {
         public void Execute(Dictionary<string, object> parameters)
         {
-            using (LDSAC form = new LDSAC())
+
+            Int64 productId = Convert.ToInt64(parameters["NodeId"].ToString());
+            Object header = null;
+            if (parameters.ContainsKey("Header"))
+            {
+                header = parameters["Header"];
+            }
+            using (LDSAC form = new LDSAC(productId, (header as OpenHeaderTitles)))
             {
                 form.ShowDialog();
             }

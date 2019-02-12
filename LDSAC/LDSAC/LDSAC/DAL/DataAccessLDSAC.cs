@@ -4,6 +4,9 @@ using OpenSystems.Common.Data;
 using System.Data;
 using OpenSystems.Financing.Common;
 using OpenSystems.Common.ExceptionHandler;
+using System.Collections.Generic;
+using OpenSystems.Financing.Entities;
+using OpenSystems.Common.Util;
 
 namespace LDSAC.DAL
 {
@@ -20,6 +23,14 @@ namespace LDSAC.DAL
         /// <param name="inuPagaVcPa">Valor de la cuota</param>
         /// <param name="inuPagaDeAp">Descuentos</param>
         /// <returns>Código del pagaré</returns>
+        /// 
+        private const String _GET_PROD_FOR_CHANGE_COND = "CC_BOChangeConditions.GetProdsToChangeCond";
+
+        public static String GET_PROD_FOR_CHANGE_COND
+        {
+            get { return _GET_PROD_FOR_CHANGE_COND; }
+        }
+
         public static Int64? InsertPagare
         (
             long inuPagacofi,
@@ -339,5 +350,131 @@ namespace LDSAC.DAL
                 throw (ex);
             }
         }
+
+        /*Obtener productos y diferidos*/
+
+        public static void GetDebtToChangeCond(Int64 subscriptionId, Int64? productId, Int64? financingId, Int64? deferredId,
+            out Dictionary<Int64, Product> products, out List<Deferred> deferreds)
+        {
+            deferreds = new List<Deferred>();
+
+            using (DbCommand cmd = OpenDataBase.db.GetStoredProcCommand(GET_PROD_FOR_CHANGE_COND))
+            {
+                OpenDataBase.db.AddInParameter(cmd, "inuSubscriptionId", DbType.Int64, subscriptionId);
+                OpenDataBase.db.AddInParameter(cmd, "inuProductId", DbType.Int64, productId);
+                OpenDataBase.db.AddInParameter(cmd, "inuFinancingId", DbType.Int64, financingId);
+                OpenDataBase.db.AddInParameter(cmd, "inuDeferredId", DbType.Int64, deferredId);
+                OpenDataBase.db.AddParameterRefCursor(cmd, "orfProducts");
+                OpenDataBase.db.AddParameterRefCursor(cmd, "orfDefWithPendBal");
+
+                /* Ejecuta el comando a través de un DataReader */
+                using (IDataReader reader = OpenDataBase.db.ExecuteReader(cmd, CommandBehavior.SequentialAccess))
+                {
+                    GetProducts(reader, out products);
+
+                    if (reader.NextResult())
+                    {
+                        GetDeferreds(reader, out deferreds);
+                    }
+                }
+            }
+        }
+
+        private static void GetProducts(IDataReader reader, out Dictionary<Int64, Product> products)
+        {
+            products = new Dictionary<Int64, Product>();
+            BaseProduct baseProduct;
+            DependingProduct dependingProd;
+            Int64? baseProductId;
+
+            /* Se obtienen las posiciones numéricas de las columnas del conjunto de registros obtenido */
+            int colProductId = reader.GetOrdinal("PRODUCT_ID");
+            int colProdTypeDesc = reader.GetOrdinal("SERVDESC");
+            int colProdTypeId = reader.GetOrdinal("PRODUCT_TYPE_ID");
+            int colStatusId = reader.GetOrdinal("STATUS_ID");
+            int colStatusDesc = reader.GetOrdinal("ESCODESC");
+            int colPendingBalance = reader.GetOrdinal("PENDING_BALANCE");
+            int colDefPendBalance = reader.GetOrdinal("DEFERRED_PENDING_BAL");
+            int colBaseProdId = reader.GetOrdinal("BASE_PRODUCT_ID");
+            int colSelected = reader.GetOrdinal("SELECTED");
+
+            /* Procesa cada uno de los registros obtenidos */
+            while (reader.Read())
+            {
+                baseProductId = OpenConvert.ToLongNullable(reader[colBaseProdId]);
+
+                /* Se verifica si el producto es base o dependiente */
+                if (!baseProductId.HasValue)
+                {
+                    baseProduct = new BaseProduct();
+                    baseProduct.ProductId = OpenConvert.ToLong(reader[colProductId]);
+                    baseProduct.Description = OpenConvert.ToString(reader[colProdTypeDesc]);
+                    baseProduct.ProductTypeId = OpenConvert.ToLong(reader[colProdTypeId]);
+                    baseProduct.StatusId = OpenConvert.ToLong(reader[colStatusId]);
+                    baseProduct.StatusDescription = OpenConvert.ToString(reader[colStatusDesc]);
+                    baseProduct.PendingBalance = OpenConvert.ToDecimal(reader[colPendingBalance]);
+                    baseProduct.DeferredPendingBalance = OpenConvert.ToDecimal(reader[colDefPendBalance]);
+                    baseProduct.Selected = OpenConvert.StringOpenToBool(OpenConvert.ToString(reader[colSelected]));
+                    baseProduct.Enabled = true;
+
+                    products.Add(baseProduct.ProductId, baseProduct);
+                }
+                else
+                {
+                    dependingProd = new DependingProduct();
+                    dependingProd.BaseProductId = baseProductId.Value;
+                    dependingProd.ProductId = OpenConvert.ToLong(reader[colProductId]);
+                    dependingProd.Description = OpenConvert.ToString(reader[colProdTypeDesc]);
+                    dependingProd.ProductTypeId = OpenConvert.ToLong(reader[colProdTypeId]);
+                    dependingProd.StatusId = OpenConvert.ToLong(reader[colStatusId]);
+                    dependingProd.StatusDescription = OpenConvert.ToString(reader[colStatusDesc]);
+                    dependingProd.PendingBalance = OpenConvert.ToDecimal(reader[colPendingBalance]);
+                    dependingProd.DeferredPendingBalance = OpenConvert.ToDecimal(reader[colDefPendBalance]);
+                    dependingProd.Selected = OpenConvert.StringOpenToBool(OpenConvert.ToString(reader[colSelected]));
+                    dependingProd.Enabled = true;
+
+                    products.Add(dependingProd.ProductId, dependingProd);
+                }
+            }
+        }
+
+        private static void GetDeferreds(IDataReader reader, out List<Deferred> deferreds)
+        {
+            deferreds = new List<Deferred>();
+            Deferred deferred;
+
+            /* Se obtienen las posiciones numéricas de las columnas del conjunto de registros obtenido */
+            int colRowNumber = reader.GetOrdinal("ROW_NUMBER_");
+            int colDeferredId = reader.GetOrdinal("DEFERRED_ID");
+            int colFinancingId = reader.GetOrdinal("FINANCING_ID");
+            int colProductId = reader.GetOrdinal("PRODUCT_ID");
+            int colConceptId = reader.GetOrdinal("CONCEPT_ID");
+            int colConceptDesc = reader.GetOrdinal("CONCEPT_DESC");
+            int colIntConceptId = reader.GetOrdinal("INTEREST_CONCEPT_ID");
+            int colIntConceptDesc = reader.GetOrdinal("INTEREST_CONCEPT_DESC");
+            int colQuotaValue = reader.GetOrdinal("QUOTA_VALUE");
+            int colPendingBalance = reader.GetOrdinal("PENDING_BALANCE");
+            int colLastMovDate = reader.GetOrdinal("LAST_MOVEMENT_DATE");
+
+            /* Procesa cada uno de los registros obtenidos */
+            while (reader.Read())
+            {
+                deferred = new Deferred();
+                deferred.Position = OpenConvert.ToLong(reader[colRowNumber]);
+                deferred.Id = OpenConvert.ToLong(reader[colDeferredId]);
+                deferred.FinancingId = OpenConvert.ToLong(reader[colFinancingId]);
+                deferred.ProductId = OpenConvert.ToLong(reader[colProductId]);
+                deferred.ConceptId = OpenConvert.ToInt32(reader[colConceptId]);
+                deferred.ConceptDescription = OpenConvert.ToString(reader[colConceptDesc]);
+                deferred.InterestConcId = OpenConvert.ToInt32(reader[colIntConceptId]);
+                deferred.InterestConcDescription = OpenConvert.ToString(reader[colIntConceptDesc]);
+                deferred.QuoteValue = OpenConvert.ToDecimal(reader[colQuotaValue]);
+                deferred.PendingBalance = OpenConvert.ToDecimal(reader[colPendingBalance]);
+                deferred.LastMovementDate = OpenConvert.ToDateTimeNullable(reader[colLastMovDate]).Value;
+
+                deferreds.Add(deferred);
+            }
+        }
+
     }
 }

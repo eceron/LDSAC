@@ -176,7 +176,12 @@ namespace LDSAC
             this.txtFinancingId.TextBoxValue = this._financingId.ToString();
 
             /* Obtiene los productos a incluir en la financiación para la suscripción */
-            this._pnlDebtSelection.BaseProducts = ChangeCondController.Instance.GetDebtToChangeCond(
+            /*this._pnlDebtSelection.BaseProducts = ChangeCondController.Instance.GetDebtToChangeCond(
+                this._subscriptionId,
+                this._productId,
+                this._financingId,
+                this._deferredId);*/
+            this._pnlDebtSelection.BaseProducts = GetDebtToChangeCond(
                 this._subscriptionId,
                 this._productId,
                 this._financingId,
@@ -184,6 +189,30 @@ namespace LDSAC
 
             /* Inicializa el indicador de cambio en la selección de diferidos */
             this._deferredSelChanged = true;
+        }
+
+        /*Obtiene productos y diferidos*/
+        public List<BaseProduct> GetDebtToChangeCond(Int64 subscriptionId, Int64? productId, Int64? financingId, Int64? deferredId)
+        {
+            Dictionary<Int64, Product> products;
+            List<Deferred> deferreds;
+
+            /* Se obtienen los productos y diferidos a incluir en el cambio de condiciones */
+            DAL.DataAccessLDSAC.GetDebtToChangeCond(
+                subscriptionId,
+                productId,
+                financingId,
+                deferredId,
+                out products,
+                out deferreds);
+
+            /* Se adicionan los diferidos a los productos según corresponda */
+            FinancingController.Instance.AddDeferredsToProducts(ref products, ref deferreds);
+
+            /* Se obtiene la lista de productos base a partir de la colección de productos */
+            List<BaseProduct> baseProducts = FinancingController.Instance.GetBaseProducts(ref products);
+
+            return baseProducts;
         }
 
 

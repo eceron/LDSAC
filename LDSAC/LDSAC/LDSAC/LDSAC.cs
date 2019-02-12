@@ -16,6 +16,7 @@ using LDSAC.DAL;
 using OpenSystems.Financing.Windows.Controls;
 using OpenSystems.Windows.Controls.OperatingSectorControl.DAO;
 using OpenSystems.Financing.Common;
+using OpenSystems.Financing.Entities;
 
 
 namespace LDSAC
@@ -30,8 +31,9 @@ namespace LDSAC
         private Int64? _subscriptionId;
         private Int64? _productId;
         private Boolean successfulOperation = false;
+        private Int64 nuSubscriptionId;
         #endregion              
-
+        
         #region Propiedades
 
         /// <summary>
@@ -416,25 +418,36 @@ namespace LDSAC
         }
         #endregion      
         
-        public LDSAC()
+        public LDSAC(Int64 productId, OpenHeaderTitles header)
         {
+            
             InitializeComponent();
-
-            this.LoadApplication();
+            this._productId = productId;
+            this.LoadApplication(header);
             
         }
 
-        private void LoadApplication()
+        private void LoadApplication(OpenHeaderTitles header)
         {
-            this.header = new OpenHeaderTitles();
+            this.header = new OpenHeaderTitles();            
 
-            this.header.HeaderTitle = "Abono a capital";
-
-            this.header.HeaderSubtitle1 = "HeaderSubtitle1 eceron";
-
-            this.header.HeaderSubtitle2 = "HeaderSubtitle2 eceron";
-
-            //this.header.RowInformationHeader = "header.RowInformationHeader";
+            /* Configura el encabezado */
+            if (header.ParsedHeaderTitle != null)
+            {
+                this.header.HeaderTitle = header.ParsedHeaderTitle;
+            }
+            if (header.ParsedHeaderSubtitle1 != null)
+            {
+                this.header.HeaderSubtitle1 = header.ParsedHeaderSubtitle1;
+            }
+            if (header.ParsedHeaderSubtitle2 != null)
+            {
+                this.header.HeaderSubtitle2 = header.ParsedHeaderSubtitle2;
+            }
+            if (header.RowInformationHeader != null)
+            {
+                this.header.RowInformationHeader = header.RowInformationHeader;
+            }
 
             this.Text = "LDSAC - Abono a capital";
 
@@ -442,18 +455,7 @@ namespace LDSAC
             MotiveGenericDataPanel.TagName = "P_ABONO_A_CAPITAL_100364";//"P_CHANGE_COND_DEBT"; //FinanBLConstants.CHANGE_COND_PACK_TYPE_TAG_NAME;
             MotiveGenericDataPanel.MotiveTagName = "M_ABONO_A_CAPITAL_100346";//"M_DEBT_NEGOTIATION"; //FinanBLConstants.CHANGE_COND_PROD_MOTI_TAG_NAME;
             /*Valores quemados de prueba*/
-
-            
-            /*this.MotiveGenericDataPanel.RequestInstance.EmployeeName = "Eduardo Cerón";
-            this.MotiveGenericDataPanel.RequestInstance.EmployeeId = 239232;
-            //this.MotiveGenericDataPanel.RequestInstance.Comment = "Esto es una prueba";
-            this.MotiveGenericDataPanel.RequestInstance.RequestId = 24343;
-            this.MotiveGenericDataPanel.RequestInstance.OrganizationalArea = "Area";
-            this.MotiveGenericDataPanel.RequestInstance.OrganizationalAreaId = 999;
-            this.MotiveGenericDataPanel.RequestInstance.AddressId = 223223;
-            //this.MotiveGenericDataPanel.RequestInstance.ReceptionTypeId = 55555;
-            this.MotiveGenericDataPanel.RequestInstance.ContactId = 334342;
-            this.MotiveGenericDataPanel.RequestInstance.RegisterDate = Convert.ToDateTime("11/02/2019");*/
+                        
             this._subscriptionId = 4659;
             //this._productId = 4659;
             //this._financingId = 3634435;
@@ -631,7 +633,7 @@ namespace LDSAC
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.LoadApplication();
+            //this.LoadApplication();
 
             //this.LDSAC_Load(sender, e);
         }
@@ -654,6 +656,9 @@ namespace LDSAC
                 (this.chCondButtonsPanel.CurrentPanel as RequestRegisterControl).ValidateData();
             }
         }
+
+       
+
         #region Metodos
         private void ExecuteAbonoCapital()
         {
