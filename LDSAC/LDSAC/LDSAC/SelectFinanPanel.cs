@@ -117,6 +117,7 @@ namespace LDSAC
         {
             /* Se verifica si el diferido puede ser incluido en el cambio de condiciones, si este se
              * encuentra seleccionado */
+            
             if (e.Deferred.Selected)
             {
                 try
