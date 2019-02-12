@@ -25,12 +25,17 @@ namespace LDSAC.DAL
         /// <returns>Código del pagaré</returns>
         /// 
         private const String _GET_PROD_FOR_CHANGE_COND = "CC_BOChangeConditions.GetProdsToChangeCond";
+        private const String _GET_SUSC_PROD = "LDC_BOABONOCAPITAL.PRGETSUSCPRODUCT";
 
         public static String GET_PROD_FOR_CHANGE_COND
         {
             get { return _GET_PROD_FOR_CHANGE_COND; }
         }
 
+        public static String GET_SUSC_PROD
+        {
+            get { return _GET_SUSC_PROD; }
+        }
         public static Int64? InsertPagare
         (
             long inuPagacofi,
@@ -475,6 +480,16 @@ namespace LDSAC.DAL
                 deferreds.Add(deferred);
             }
         }
+        public static void GetSuscProd(Int64 productId, out Int64 subscriptionId)
+        {
+            using (DbCommand cmd = OpenDataBase.db.GetStoredProcCommand(GET_SUSC_PROD))
+            {                
+                OpenDataBase.db.AddInParameter(cmd, "inuProduct", DbType.Int64, productId);
+                OpenDataBase.db.AddOutParameter(cmd, "outSusc", DbType.Int64, 8);
 
+                OpenDataBase.db.ExecuteNonQuery(cmd);
+                subscriptionId = Convert.ToInt64(OpenDataBase.db.GetParameterValue(cmd, "outSusc"));
+            }
+        }
     }
 }

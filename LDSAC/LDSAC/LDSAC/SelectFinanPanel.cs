@@ -25,6 +25,7 @@ namespace LDSAC
         private Boolean _deferredSelChanged;
         private Hashtable _selectedProducts;
         private Decimal _valToChangeConditions;
+        private List<String> _listaDiferidos;
         #endregion
 
         #region Propiedades
@@ -33,6 +34,10 @@ namespace LDSAC
             get { return _valToChangeConditions; }
         }
 
+        public List<String> ListDiferidos
+        {
+            get { return _listaDiferidos; }
+        }
 
         [Browsable(false)]
         public Boolean DeferredSelChanged
@@ -69,7 +74,9 @@ namespace LDSAC
         
         public SelectFinanPanel()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            this._listaDiferidos = new List<String>();
+            this._valToChangeConditions = 10;
         }
 
         #region Acciones de Eventos
@@ -117,9 +124,11 @@ namespace LDSAC
         {
             /* Se verifica si el diferido puede ser incluido en el cambio de condiciones, si este se
              * encuentra seleccionado */
-            
+            //MessageBox.Show(Convert.ToString(e.Deferred.Id));
             if (e.Deferred.Selected)
             {
+                MessageBox.Show("Se selecciona"+ Convert.ToString(e.Deferred.Id));
+                ListDiferidos.Add(Convert.ToString(e.Deferred.Id));
                 try
                 {
                     /* Valida que el diferido pueda ser seleccionado */
@@ -137,21 +146,27 @@ namespace LDSAC
                     e.CancelChange = true;
                 }
             }
+            else
+            {
+                MessageBox.Show("Se deselecciona "+Convert.ToString(e.Deferred.Id));
+                ListDiferidos.Remove(Convert.ToString(e.Deferred.Id));
+            }
 
             /* Se valida si el cambio en la selección del diferido no será cancelado */
-            if (!e.CancelChange)
+            /*if (!e.CancelChange)
             {
+                MessageBox.Show(Convert.ToString(e.Deferred.Id));
                 /* Se recalcula el valor total a financiar teniendo en cuenta el flag de selección del diferido */
-                FinanConditionsController.Instance.ComputeValueToFinance(
+                /*FinanConditionsController.Instance.ComputeValueToFinance(
                     e.Deferred,
                     ref this._valToChangeConditions);
 
                 /* Se sincroniza el valor total a financiar con el campo del control */
-                this.SynchronizeTotalToFinance();
+                /*this.SynchronizeTotalToFinance();
 
                 /* Establece el flag de cambio en la selección de diferidos */
-                this._deferredSelChanged = true;
-            }
+                /*this._deferredSelChanged = true;
+            }*/
         }
         #endregion
 
@@ -246,6 +261,15 @@ namespace LDSAC
         {
             //this.txtBalToChangeCond.TextBoxValue = this._valToChangeConditions.ToString();
             this.txtBalToChangeCond.TextBoxValue = Convert.ToString(0);
+        }
+
+        public void ImprimirDiferidos()
+        {
+            foreach (String diferido in ListDiferidos)
+            {
+                MessageBox.Show("Diferido seleccionado: " + Convert.ToString(diferido));
+            }
+
         }
         #endregion
     }

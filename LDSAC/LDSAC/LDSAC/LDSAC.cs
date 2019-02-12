@@ -456,7 +456,7 @@ namespace LDSAC
             MotiveGenericDataPanel.MotiveTagName = "M_ABONO_A_CAPITAL_100346";//"M_DEBT_NEGOTIATION"; //FinanBLConstants.CHANGE_COND_PROD_MOTI_TAG_NAME;
             /*Valores quemados de prueba*/
                         
-            this._subscriptionId = 4659;
+            this._subscriptionId = this.GetSuscProd(Convert.ToInt64(this._productId));
             //this._productId = 4659;
             //this._financingId = 3634435;
             this.MotiveGenericDataPanel.SubscriptionId = this._subscriptionId;
@@ -587,6 +587,7 @@ namespace LDSAC
                         
                         //this.Close();
                     }
+                    this.SelectFinanPanel.ImprimirDiferidos();
                     MessageBox.Show("Finalización trámite preButton", "Mensaje Alerta");
                 }
 
@@ -663,6 +664,14 @@ namespace LDSAC
         private void ExecuteAbonoCapital()
         {
 
+        }
+
+        private Int64 GetSuscProd(Int64 productId)
+        {
+            Int64 subscriptionId;
+            DAL.DataAccessLDSAC.GetSuscProd(productId, out subscriptionId);
+
+            return subscriptionId;
         }
         #endregion
     }
