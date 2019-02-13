@@ -83,6 +83,10 @@
     <Reference Include="OpenSystems.Windows">
       <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\OpenSystems.Windows.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.DataAccess, Version=2.112.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\OpenSystems\OpenSmartFlex\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -91,12 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\DataAccessLDSAC.cs" />
-    <Compile Include="DebtConditionPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="DebtConditionPanel.Designer.cs">
-      <DependentUpon>DebtConditionPanel.cs</DependentUpon>
-    </Compile>
     <Compile Include="DynamicCallerLDSAC.cs" />
     <Compile Include="LDSAC.cs">
       <SubType>Form</SubType>
@@ -122,12 +120,6 @@
     </Compile>
     <Compile Include="SteepBarButtonsPanel.cs.Designer.cs">
       <DependentUpon>SteepBarButtonsPanel.cs.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WarrantyDocumentPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WarrantyDocumentPanel.Designer.cs">
-      <DependentUpon>WarrantyDocumentPanel.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

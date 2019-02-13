@@ -29,23 +29,11 @@ namespace LDSAC
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
-        {
-            this.button1 = new System.Windows.Forms.Button();
+        {            
             this.chCondButtonsPanel = new OpenSystems.Financing.Windows.Controls.OpenSteepBarButtonsPanel();
             this.ChConditionsHeadPanel = new System.Windows.Forms.Panel();
             this.chCondWorkPanel = new System.Windows.Forms.Panel();
-            this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button1.Location = new System.Drawing.Point(0, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(660, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Debug";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.SuspendLayout();            
             // 
             // ChConditionsHeadPanel
             // 
@@ -109,8 +97,7 @@ namespace LDSAC
 
         #endregion
 
-        private OpenSystems.Financing.Windows.Controls.OpenSteepBarButtonsPanel chCondButtonsPanel;
-        private System.Windows.Forms.Button button1;
+        private OpenSystems.Financing.Windows.Controls.OpenSteepBarButtonsPanel chCondButtonsPanel;       
         private System.Windows.Forms.Panel ChConditionsHeadPanel;
         private System.Windows.Forms.Panel chCondWorkPanel;
     }

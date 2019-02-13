@@ -26,9 +26,21 @@ namespace LDSAC
         private Hashtable _selectedProducts;
         private Decimal _valToChangeConditions;
         private List<String> _listaDiferidos;
+        private string[] _finalListDiferidos;
+        private Decimal _suma_diferidos;
         #endregion
 
         #region Propiedades
+        public Decimal SumaDiferidos
+        {
+            get { return _suma_diferidos; }
+        }
+
+        public string[] FinalListDiferidos
+        {
+            get { return _finalListDiferidos; }
+        }
+
         public Decimal ValToChangeConditions
         {
             get { return _valToChangeConditions; }
@@ -77,6 +89,7 @@ namespace LDSAC
             InitializeComponent();
             this._listaDiferidos = new List<String>();
             this._valToChangeConditions = 10;
+            this._suma_diferidos = 0;
         }
 
         #region Acciones de Eventos
@@ -127,8 +140,9 @@ namespace LDSAC
             //MessageBox.Show(Convert.ToString(e.Deferred.Id));
             if (e.Deferred.Selected)
             {
-                MessageBox.Show("Se selecciona"+ Convert.ToString(e.Deferred.Id));
+                //MessageBox.Show("Se selecciona"+ Convert.ToString(e.Deferred.Id));
                 ListDiferidos.Add(Convert.ToString(e.Deferred.Id));
+                this._suma_diferidos = this._suma_diferidos + e.Deferred.PendingBalance;
                 try
                 {
                     /* Valida que el diferido pueda ser seleccionado */
@@ -148,8 +162,9 @@ namespace LDSAC
             }
             else
             {
-                MessageBox.Show("Se deselecciona "+Convert.ToString(e.Deferred.Id));
+                //MessageBox.Show("Se deselecciona "+Convert.ToString(e.Deferred.Id));
                 ListDiferidos.Remove(Convert.ToString(e.Deferred.Id));
+                this._suma_diferidos = this._suma_diferidos - e.Deferred.PendingBalance;
             }
 
             /* Se valida si el cambio en la selección del diferido no será cancelado */
@@ -263,11 +278,57 @@ namespace LDSAC
             this.txtBalToChangeCond.TextBoxValue = Convert.ToString(0);
         }
 
-        public void ImprimirDiferidos()
+        public String Concatenar_Diferidos()
         {
+            String cadena_diferidos;
+            this._finalListDiferidos = new string[ListDiferidos.Count];
+            int i = 0;
             foreach (String diferido in ListDiferidos)
             {
-                MessageBox.Show("Diferido seleccionado: " + Convert.ToString(diferido));
+                this._finalListDiferidos[i] = diferido;
+                i = i + 1;                
+            }
+
+            if (this._finalListDiferidos.Length == 0)
+            {
+                cadena_diferidos = "NO_SELECT";
+            }
+            else
+            {
+                cadena_diferidos = this._finalListDiferidos[0];
+                for (int j = 1; j < this._finalListDiferidos.Length; j++)
+                {
+                    cadena_diferidos = cadena_diferidos + "," + this._finalListDiferidos[j];
+                }
+            }            
+
+            return cadena_diferidos;            
+        }
+
+        public void ExecuteAbonoCapital()
+        {
+            String diferidos = Concatenar_Diferidos();
+            if (Convert.ToDecimal(txtBalToChangeCond.TextBoxValue) > 0)
+            {
+                if (diferidos == "NO_SELECT")
+                {
+                    ExceptionHandler.DisplayMessage(ErrorMessages.INVALID_COSIGNER_ERR, "Debe seleccionar al menos un diferido");                      
+                }
+                else
+                {
+                    if (Convert.ToDecimal(txtBalToChangeCond.TextBoxValue) < SumaDiferidos)
+                    {                        
+                        //DAL.DataAccessLDSAC.ExecuteAbonoCapital(diferidos, Convert.ToDecimal(txtBalToChangeCond.TextBoxValue));
+                    }
+                    else
+                    {
+                        ExceptionHandler.DisplayMessage(ErrorMessages.INVALID_COSIGNER_ERR, "El valor a abonar debe ser menor a la suma de los diferidos seleccionados, suma de diferidos: $" + Convert.ToString(SumaDiferidos));                        
+                    }
+                }                
+            }
+            else
+            {
+                ExceptionHandler.DisplayMessage(ErrorMessages.INVALID_COSIGNER_ERR,"El valor a abonar debe ser mayor que cero");                                
             }
 
         }

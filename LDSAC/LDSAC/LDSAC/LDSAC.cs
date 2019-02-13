@@ -31,7 +31,6 @@ namespace LDSAC
         private Int64? _subscriptionId;
         private Int64? _productId;
         private Boolean successfulOperation = false;
-        private Int64 nuSubscriptionId;
         #endregion              
         
         #region Propiedades
@@ -89,9 +88,6 @@ namespace LDSAC
                     /* Se establece la suscripción en el control de datos básicos de la solicitud */
                     this.MotiveGenericDataPanel.SubscriptionId = this._subscriptionId;
 
-                    /* Se establece la suscripción en el panel de condiciones de financiación */
-                    this.DebtConditionsPanel.SubscriptionId = this._subscriptionId;
-
                     /* Se obtiene la deuda diferida sobre la cual se realizará el cambio de condiciones */
                     this.SelectFinanPanel.LoadDebtToChangeCond(
                         this._subscriptionId.Value,
@@ -130,9 +126,6 @@ namespace LDSAC
                     /* Se establece el producto en el control de datos básicos de la solicitud */
                     this.MotiveGenericDataPanel.ProductId = this._productId;
 
-                    /* Se establece el producto en el panel de condiciones de financiación */
-                    this.DebtConditionsPanel.ProductId = this._productId;
-
                     /* Se obtiene la deuda diferida sobre la cual se realizará el cambio de condiciones */
                     this.SelectFinanPanel.LoadDebtToChangeCond(
                         this._subscriptionId.Value,
@@ -159,9 +152,6 @@ namespace LDSAC
 
                     /* Se establece la suscripción en el control de datos básicos de la solicitud */
                     this.MotiveGenericDataPanel.SubscriptionId = _subscriptionId;
-
-                    /* Se establece la suscripción en el panel de condiciones de financiación */
-                    this.DebtConditionsPanel.SubscriptionId = _subscriptionId;
 
                     /* Se obtiene la deuda diferida sobre la cual se realizará el cambio de condiciones */
                     this.SelectFinanPanel.LoadDebtToChangeCond(
@@ -193,9 +183,6 @@ namespace LDSAC
                         this._subscriptionId.Value,
                         _productId);
 
-                    /* Se establece el producto en el panel de condiciones de financiación */
-                    this.DebtConditionsPanel.ProductId = _productId;
-
                     this.SelectFinanPanel.LoadDebtToChangeCond(
                         this._subscriptionId.Value,
                         _productId,
@@ -214,208 +201,18 @@ namespace LDSAC
         public RequestRegisterControl MotiveGenericDataPanel;
 
         /// <summary>
-        /// Panel de condiciones de financiación
-        /// </summary>
-        private DebtConditionPanel DebtConditionsPanel;
-
-        /// <summary>
-        /// Panel de datos de pagaré
-        /// </summary> 
-        private WarrantyDocumentPanel WarrantyDocumentPanel;
-
-        /// <summary>
         /// Panel de seleccion de financiaciones para cambio de condiciones
         /// </summary>
         private SelectFinanPanel SelectFinanPanel;
 
-
         private OpenHeaderTitles header;
-
-        /// <summary>
-        /// Variable para almacenar si se imprime o no el pagare.
-        /// </summary>
-        String printWarrantyDoc = string.Empty;
 
         #endregion private variables
 
         #region Métodos
-        private void InitializeFinancingConditions()
-        {
-            /* Forza a inicializar condiciones de financiación */
-            this.DebtConditionsPanel.InitializeFinancingConditions();
-
-            /* Define valores de referencia en el componente de condiciones de financiación */
-            this.InitOtherFinancingValues();
-        }
+        
 
 
-        /// <summary>
-        /// Define valores de referencia en el componente de condiciones de financiacion
-        /// </summary>
-        private void InitOtherFinancingValues()
-        {
-            /* Asigna el valor mínimo a pagar y el valor a financiar */
-            this.DebtConditionsPanel.MinimumValueToPay = 0;
-            this.DebtConditionsPanel.FinSelectedValue = Convert.ToDouble(SelectFinanPanel.ValToChangeConditions);
-            this.DebtConditionsPanel.ValueToFinancing = Convert.ToDouble(SelectFinanPanel.ValToChangeConditions);
-            this.DebtConditionsPanel.ValueToPay = 0;
-        }
-
-
-        /// <summary>
-        /// Ejecuta cambio de condiciones
-        /// </summary>
-        private void ExecuteChangeConditions()
-        {
-            Decimal quoteAccum;
-            Decimal pendingBalance;
-            Decimal capitalAccum;
-            Decimal extraQuoteAccum;
-            Decimal interestAccum;
-            Int64? financingId = null;
-
-            Decimal totalToFinance;
-
-            Boolean waitBySign;
-            Boolean waitByPayment;
-            Boolean taxesOneQuote;
-
-            Cursor currentCursor = this.Cursor;
-
-            Int64? nuWarrantyDoc = null;
-
-            try
-            {
-                this.Cursor = Cursors.WaitCursor;
-
-                /* Se ejecuta el proceso de cambio de condiciones */
-                FinancingController.Instance.ExecDebtFinancing
-                (
-                    this.DebtConditionsPanel.FinConditions.FinancingPlanId.Value,
-                    this.DebtConditionsPanel.FinConditions.ComputeMethod.Value,
-                    this.DebtConditionsPanel.FinConditions.FirstDateToPay.Value,
-                    this.DebtConditionsPanel.FinConditions.InterestOfFinacing.Value,
-                    this.DebtConditionsPanel.FinConditions.Spread.Value,
-                    this.DebtConditionsPanel.FinConditions.QuotasNumber.Value,
-                    "RF",
-                    this.DebtConditionsPanel.FinConditions.PercentToFinancing.Value,
-                    this.DebtConditionsPanel.FinConditions.ValueToPay.Value,
-                    this.DebtConditionsPanel.FinConditions.TaxOneQuota,
-                    this.DebtConditionsPanel.Programname,
-                    false,
-                    true,
-                    ref financingId,
-                    out quoteAccum,
-                    out pendingBalance,
-                    out capitalAccum,
-                    out extraQuoteAccum,
-                    out interestAccum,
-                    out waitBySign,
-                    out waitByPayment
-                );
-
-                /* Establece el valor del flag que indica si los impuestos serán financiados a una sola cuota */
-                taxesOneQuote = (DebtConditionsPanel.FinConditions.TaxOneQuota == FinanBLConstants.SI);
-
-                /* Se calcula el valor total a financiar a partir de los acumulados */
-                totalToFinance = capitalAccum + extraQuoteAccum;
-
-                /* Saldo actual : %s1. Condiciones de financiación : Cuota Inicial: %s2, Valor Cuota: %s3. Financiar con estas condiciones? */
-                DialogResult drProcessConfirmation = ExceptionHandler.DisplayMessage(117523, //FinancingConstants.AcceptChConditions,
-                    new String[] { totalToFinance.ToString(), quoteAccum.ToString() },
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-
-                if (drProcessConfirmation == DialogResult.Yes)
-                {
-                    /* Deshace la transaccion para procesar mediante espera pago */
-                    FinancingController.Instance.RollbackTransaction();
-
-                    /* Registra los datos de la solicitud */
-                    this.MotiveGenericDataPanel.RegisterRequestData(false);
-
-                    foreach (DictionaryEntry de in this.DebtConditionsPanel.SelectedProducts)
-                    {
-                        //Registra o actualiza el rol del solicitante
-                        this.MotiveGenericDataPanel.UpdProdRole((Int64)de.Key);
-                    }
-
-                    /* Se almacenan los datos de la solicitud de financiación */
-                    FinancingController.Instance.SaveFinancingRequest(
-                        this.MotiveGenericDataPanel.RequestInstance.RequestId.Value,
-                        RequestType.CHANGE_CONDITIONS,
-                        this.MotiveGenericDataPanel.SubscriptionId.Value,
-                        financingId.Value,
-                        DebtConditionsPanel.FinConditions.FinancingPlanId.Value,
-                        DebtConditionsPanel.FinConditions.ComputeMethod.Value,
-                        DebtConditionsPanel.FinConditions.InterestRateId.Value,
-                        DebtConditionsPanel.FinConditions.FirstDateToPay.Value,
-                        DebtConditionsPanel.FinConditions.ValueToPay.Value,
-                        DebtConditionsPanel.FinConditions.PercentToFinancing.Value,
-                        DebtConditionsPanel.FinConditions.InterestOfFinacing.Value,
-                        DebtConditionsPanel.FinConditions.Spread.Value,
-                        DebtConditionsPanel.FinConditions.QuotasNumber.Value,
-                        (Double)quoteAccum,
-                        taxesOneQuote,
-                        "RF",
-                        waitBySign,
-                        waitByPayment,
-                        this.MotiveGenericDataPanel.RequestInstance.EmployeeId.Value,
-                        DebtConditionsPanel.Programname,
-                        FinanBLConstants.NO,
-                        this.FinancingId);
-
-                    /* Registra los datos del pagaré de financiación solo si el plan de financiación
-                     * requiere pagaré */
-                    if (DebtConditionsPanel.MandatoryWarrantyDocument)
-                    {
-                        nuWarrantyDoc = this.WarrantyDocumentPanel.RegisterWarrDoc(
-                             (Double)interestAccum,
-                             financingId,
-                             (Double)totalToFinance,
-                             (Double)quoteAccum,
-                             this.DebtConditionsPanel.FinConditions.QuotasNumber.Value,
-                             this.DebtConditionsPanel.FinConditions.InterestOfFinacing.Value);
-                    }
-
-                    /* Obtiene el valor del parámetro que indica si se imprime o no el pagaré */
-                    printWarrantyDoc = Parameter.prm.GetParameterString("FA_IMPRIME_PAGARE"); //FinancingConstants.PrintWarrantyDoc);
-
-                    /* Imprime pagaré si es requerido */
-                    /*if (DebtConditionsPanel.MandatoryWarrantyDocument && printWarrantyDoc != null
-                                && printWarrantyDoc.Equals("S") && financingId.HasValue)
-                    {
-                        PromissoryNoteUtil.PrintPromNote(nuWarrantyDoc.Value, this.WarrantyDocumentPanel.PrintingFormatCode);
-                    }*/
-
-                    // Indica que la solicitud se registro exitosamente
-                    this.successfulOperation = true;
-
-                    /* Se despliega un mensaje indicando que el proceso terminó con éxito */
-                    ExceptionHandler.DisplayMessage(ErrorMessages.SUCCESS_OPERATION_MSG, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    /* Se realiza persistencia en la base de datos */
-                    FinancingController.Instance.CommitTransaction();
-
-                    /* Se cierra la forma */
-                    this.Close();
-                }
-                else
-                {
-                    /* Se deshacen los cambios realizados en la base de datos */
-                    FinancingController.Instance.RollbackTransaction();
-                }
-
-                this.Cursor = currentCursor;
-            }
-            catch (Exception ex)
-            {
-                /* Se deshacen los cambios realizados en la base de datos */
-                FinancingController.Instance.RollbackTransaction();
-                this.Cursor = currentCursor;
-                throw ex;
-            }
-        }
         #endregion      
         
         public LDSAC(Int64 productId, OpenHeaderTitles header)
@@ -457,41 +254,19 @@ namespace LDSAC
             /*Valores quemados de prueba*/
                         
             this._subscriptionId = this.GetSuscProd(Convert.ToInt64(this._productId));
-            //this._productId = 4659;
-            //this._financingId = 3634435;
             this.MotiveGenericDataPanel.SubscriptionId = this._subscriptionId;
 
             SelectFinanPanel = new SelectFinanPanel();
-            SelectFinanPanel.ProgramName = "LDSAC"; // FinancingConstants.ChConditionsAppName;  
+            SelectFinanPanel.ProgramName = "LDSAC"; 
             SelectFinanPanel.txtSubscriptionId.TextBoxValue = Convert.ToString(this._subscriptionId);
             this.SelectFinanPanel.LoadDebtToChangeCond(
                         this._subscriptionId.Value,
                         _productId,
                         this._financingId,
                         this._deferredId);
-            
-            DebtConditionsPanel = new DebtConditionPanel();
-            /*Debe ir comentado *///DebtConditionsPanel.FinConditions.DocumentSupportRequired = false;
-            //DebtConditionsPanel.FinConditions.ShowDocumentSupport = false;
-            //DebtConditionsPanel.FinConditions.ShowPercentToFinancing = false;
-            //DebtConditionsPanel.FinConditions.ShowchkIVAOneQuote = false;
-            //DebtConditionsPanel.FinConditions.ShowMinimunValueToPay = false;/*Hasta aquí*/
-            //DebtConditionsPanel.FinConditions.Programa = "LDSAC"; // SelectFinanPanel.ProgramName;
-            DebtConditionsPanel.Programname = "LDSAC"; //DebtConditionsPanel.FinConditions.Programa;
-
-            WarrantyDocumentPanel = new WarrantyDocumentPanel();
 
             this.BaseEntity = "CONTRACT";
             this.NodeLevelValue = "603046"; // nodeLevelValue;
-
-           // this.ProductId = Convert.ToInt64(this.NodeLevelValue);
-
-            /* Asigna el header */
-
-            /*if (this.header.HeaderTitle != null)
-            {
-                MessageBox.Show("Debe seleccionar un archivo." + this.header.HeaderTitle);
-            }*/
 
             this.ChConditionsHeadPanel.Controls.Add(this.header);
 
@@ -504,14 +279,6 @@ namespace LDSAC
             /* Define segundo panel de navegación */
             this.chCondButtonsPanel.PanelCollection.Add(this.SelectFinanPanel);
 
-            /* Define el tercer panel de navegación */
-            //this.chCondButtonsPanel.PanelCollection.Add(this.DebtConditionsPanel);
-
-            /* Define el cuarto panel de navegación */
-            //this.chCondButtonsPanel.PanelCollection.Add(this.WarrantyDocumentPanel);
-
-            /* Establece el maximo panel de navegacion por defecto */
-            //this.chCondButtonsPanel.SetMaxPanel(this.WarrantyDocumentPanel);
             this.chCondButtonsPanel.SetMaxPanel(this.SelectFinanPanel);
             
 
@@ -525,11 +292,7 @@ namespace LDSAC
                 return;
 
             try
-            {
-                /* Se establece el identificador del cliente titutar de la deuda a financiar en el panel de
-                 * pagaré */
-                this.WarrantyDocumentPanel.SubscriberId = this.MotiveGenericDataPanel.SubscriberId;
-
+            {               
                 /* Inicializaciones de financiaciones a nivel de BD */
                 DataAccessLDSAC.InitializeFinancing(this._subscriptionId.Value); //this.SubscriptionId.Value);
 
@@ -539,13 +302,7 @@ namespace LDSAC
                 /* Se establecen los manejadores de los eventos asociados a los botones del panel de navegación */
                 this.chCondButtonsPanel.preClickedButton += new OpenSteepBarButtonsPanel.OpenBarButtonPanelPreClickHandler(preBarButtonClick);
                 this.chCondButtonsPanel.postClickedButton += new OpenSteepBarButtonsPanel.OpenBarButtonPanelPostClickHandler(postBarButtonClick);
-
-                /* Se establece el manejador del evento asociado al cambio en la selección del plan de financiación */
-                //this.DebtConditionsPanel.ChangePlanAction += new OpenFinancingConditions.ChangePlanActionDelegate(ChangePlanAction);
-
-                /* Se establece el manejador del evento asociado al cambio del valor a pagar en las condiciones de financiación */
-                //this.DebtConditionsPanel.ValueToPayChanged += new EventHandler(DebtConditionsPanel_ValueToPayChanged);
-
+                
                 /* Se posiciona la forma en el centro de la pantalla */
                 this.CenterToScreen();
 
@@ -574,7 +331,7 @@ namespace LDSAC
                     if (SelectFinanPanel.SelectedProducts.Count == 0 || this.SelectFinanPanel.ValToChangeConditions == 0)
                     {
                         /* Error: La suma del valor de los diferidos seleccionados debe ser mayor que cero */
-                        ExceptionHandler.Raise(FinancingConstants.DeferredNotSelected);
+                        ExceptionHandler.Raise(FinancingConstants.DeferredNotSelected);                        
                     }
                     if (this.SelectFinanPanel.DeferredSelChanged)
                     {
@@ -587,8 +344,8 @@ namespace LDSAC
                         
                         //this.Close();
                     }
-                    this.SelectFinanPanel.ImprimirDiferidos();
-                    MessageBox.Show("Finalización trámite preButton", "Mensaje Alerta");
+                    ExecuteAbonoCapital();
+                    
                 }
 
             }
@@ -624,19 +381,23 @@ namespace LDSAC
                 {
 
                     //Ejecuta la financiación.
-                    //ExecuteChangeConditions();
-                    MessageBox.Show("Finalización trámite PostButton", "Mensaje Alerta");
+                    //ExecuteChangeConditions();                   
                     //this.Close();
                 }
             }
 
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Validaciones requeridas antes de iniciar el proceso de cambio de condiciones
+        /// </summary>
+        private void previousValidations()
         {
-            //this.LoadApplication();
-
-            //this.LDSAC_Load(sender, e);
+            //Ejecuta las validaciones configuradas en los atributos del tipo de solicitud 'Financiación de Deuda'
+            /*Statement.ExecFinanValidations
+            (
+                this.BaseEntity,
+                this.NodeLevelValue
+            );*/
         }
         private void LDSACNavigator_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -663,7 +424,7 @@ namespace LDSAC
         #region Metodos
         private void ExecuteAbonoCapital()
         {
-
+            this.SelectFinanPanel.ExecuteAbonoCapital();
         }
 
         private Int64 GetSuscProd(Int64 productId)
